@@ -1,5 +1,4 @@
-Gregory Wall
-Laverne Wade
+Gregory Wall, Laverne Wade
 Lyman Tucker
 Cassie Lambert
 Barry Turner
@@ -9,8 +8,7 @@ Deirdre Mullins
 Mara Wolf
 Jessica Smith
 Sara Cain
-Roxie Blevins
-Joe Fox
+Roxie Blevins, Joe Fox
 Rory Thomas
 Alissa Murillo
 Vicki Hammond
