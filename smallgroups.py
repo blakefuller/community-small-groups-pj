@@ -23,8 +23,11 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
     currentIteration = []
     currentGroup = []
     peopleInGroup = 0
+    fullBreak = False
 
     while notInGroup:
+        if fullBreak:
+            break
         for person in listOfPeople:
             # check if person is a couple
             isCouple = False
@@ -57,6 +60,20 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                             peopleInGroup += 1
                             if isCouple:
                                 peopleInGroup += 1
+                        else:
+                            if len(notInGroup) == 1:
+                                temp = currentGroup.copy()
+                                currentIteration.append(temp)
+                                currentGroup.clear()
+                                currentGroup.append(person)
+                                fullBreak = True
+    
+    # if there are left over people who did not fit in the last group
+    if currentGroup:
+        i = 0
+        for person in currentGroup:
+            currentIteration[m-i].append(person)
+            i += 1
 
     return currentIteration
 
