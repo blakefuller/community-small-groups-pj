@@ -18,33 +18,55 @@ graph.add_vertices(graphNames)
 print(graph)
 
 def getIteration(listOfPeople, homeConnectionGraph):
+
     # create list of iterations and list for storing groups of the current iteration
-    create dictionary with listOfPeople
+    notInGroup = listOfPeople
     currentIteration = []
     currentGroup = []
 
-    while (every person does not have true in the dictionary):
+    while notInGroup:
         for person in listOfPeople:
-            if(currentGroup.size == 4):
+            if len(currentGroup) == 4:
                 currentIteration.append(currentGroup)
                 currentGroup.clear()
 
             # current group to put people into (person in spot 1 should be host)
-            if (dictionary[person] == false):
-                if currentGroup.size == 0:
+            if person in notInGroup:
+                if not currentGroup:
                     currentGroup.append(person)
-                    dictionary[person] = true
-                else # we need to add a person to the current group that has not been to the host's house
-                    if(not an edge between person and current host):
-                        add edge between person and current host
+                    notInGroup.remove(person)
+                else:
+                    if not homeConnectionGraph.are_connected(person, currentGroup[0]):
+                        homeConnectionGraph.add_edge(person, currentGroup[0])
                         currentGroup.append(person)
-                        dictionary[person] = true
+                        notInGroup.remove(person)
 
     return currentIteration
 
+print(getIteration(graphNames, graph))
 
-listOfIterations = []
+    # while (every person does not have true in the dictionary):
+    #     for person in listOfPeople:
+    #         if(currentGroup.size == 4):
+    #             currentIteration.append(currentGroup)
+    #             currentGroup.clear()
 
-# if we have a clique, everyone has been to everybody's house
-if graph.omega() == list.size:
-    return finalIteration
+    #         # current group to put people into (person in spot 1 should be host)
+    #         if (dictionary[person] == false):
+    #             if currentGroup.size == 0:
+    #                 currentGroup.append(person)
+    #                 dictionary[person] = true
+    #             else # we need to add a person to the current group that has not been to the host's house
+    #                 if(not an edge between person and current host):
+    #                     add edge between person and current host
+    #                     currentGroup.append(person)
+    #                     dictionary[person] = true
+
+#     return currentIteration
+
+
+# listOfIterations = []
+
+# # if we have a clique, everyone has been to everybody's house
+# if graph.omega() == list.size:
+#     return finalIteration
