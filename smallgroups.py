@@ -1,6 +1,8 @@
 import sys
 from igraph import *
 
+m = 4
+
 #read from file and store names as a list of lists
 fp = open("group1.txt", "r")
 lines = fp.readlines()
@@ -14,55 +16,51 @@ for line in lines:
 graph = Graph()
 graph.add_vertices(graphNames)
 
-# graph.add_edge("Lyman Tucker", "Cassie Lambert")    
-print(graph)
-
-def getIteration(listOfPeople, homeConnectionGraph):
+def getIteration(listOfPeople, homeConnectionGraph, m):
 
     # create list of iterations and list for storing groups of the current iteration
-    notInGroup = listOfPeople
+    notInGroup = listOfPeople.copy()
     currentIteration = []
     currentGroup = []
+    peopleInGroup = 0
 
     while notInGroup:
         for person in listOfPeople:
-            if len(currentGroup) == 4:
-                currentIteration.append(currentGroup)
+            # check if person is a couple
+            isCouple = False
+            if "," in person:
+                isCouple = True
+
+            if peopleInGroup == m:
+                temp = currentGroup.copy()
+                currentIteration.append(temp)
                 currentGroup.clear()
+                peopleInGroup = 0
 
             # current group to put people into (person in spot 1 should be host)
             if person in notInGroup:
                 if not currentGroup:
                     currentGroup.append(person)
                     notInGroup.remove(person)
+                    peopleInGroup += 1
+                    if isCouple:
+                        peopleInGroup += 1
                 else:
                     if not homeConnectionGraph.are_connected(person, currentGroup[0]):
-                        homeConnectionGraph.add_edge(person, currentGroup[0])
-                        currentGroup.append(person)
-                        notInGroup.remove(person)
+
+                        # check if there is one spot left in the group and we try to
+                        #   add a couple, then skip
+                        if not (peopleInGroup == m-1 and isCouple):
+                            homeConnectionGraph.add_edge(person, currentGroup[0])
+                            currentGroup.append(person)
+                            notInGroup.remove(person)
+                            peopleInGroup += 1
+                            if isCouple:
+                                peopleInGroup += 1
 
     return currentIteration
 
-print(getIteration(graphNames, graph))
-
-    # while (every person does not have true in the dictionary):
-    #     for person in listOfPeople:
-    #         if(currentGroup.size == 4):
-    #             currentIteration.append(currentGroup)
-    #             currentGroup.clear()
-
-    #         # current group to put people into (person in spot 1 should be host)
-    #         if (dictionary[person] == false):
-    #             if currentGroup.size == 0:
-    #                 currentGroup.append(person)
-    #                 dictionary[person] = true
-    #             else # we need to add a person to the current group that has not been to the host's house
-    #                 if(not an edge between person and current host):
-    #                     add edge between person and current host
-    #                     currentGroup.append(person)
-    #                     dictionary[person] = true
-
-#     return currentIteration
+print(getIteration(graphNames, graph, m))
 
 
 # listOfIterations = []
