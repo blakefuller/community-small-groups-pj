@@ -14,5 +14,37 @@ for line in lines:
 graph = Graph()
 graph.add_vertices(graphNames)
 
-graph.add_edge("Lyman Tucker", "Cassie Lambert")
+# graph.add_edge("Lyman Tucker", "Cassie Lambert")    
 print(graph)
+
+def getIteration(listOfPeople, homeConnectionGraph):
+    # create list of iterations and list for storing groups of the current iteration
+    create dictionary with listOfPeople
+    currentIteration = []
+    currentGroup = []
+
+    while (every person does not have true in the dictionary):
+        for person in listOfPeople:
+            if(currentGroup.size == 4):
+                currentIteration.append(currentGroup)
+                currentGroup.clear()
+
+            # current group to put people into (person in spot 1 should be host)
+            if (dictionary[person] == false):
+                if currentGroup.size == 0:
+                    currentGroup.append(person)
+                    dictionary[person] = true
+                else # we need to add a person to the current group that has not been to the host's house
+                    if(not an edge between person and current host):
+                        add edge between person and current host
+                        currentGroup.append(person)
+                        dictionary[person] = true
+
+    return currentIteration
+
+
+listOfIterations = []
+
+# if we have a clique, everyone has been to everybody's house
+if graph.omega() == list.size:
+    return finalIteration

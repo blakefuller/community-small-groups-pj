@@ -1,0 +1,6 @@
+Program produces list of lists with each list being an iteration of groups.
+Requirements for lists:
+1. Married couples are always together
+2. Everyone gets to everyone else's home
+
+Goal: disperse people in as few iterations as possible
