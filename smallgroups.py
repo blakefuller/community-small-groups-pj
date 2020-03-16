@@ -28,60 +28,80 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
     while notInGroup:
         if fullBreak:
             break
-        for person in listOfPeople:
+        for person in notInGroup:
             # check if person is a couple
             isCouple = False
             if "," in person:
                 isCouple = True
 
+            # if current person is a couple and we only have one spot left in
+            #   the group, then skip over them
+            if (peopleInGroup == m-1 and isCouple):
+                continue
+
+            # if group size is full, add it to the iteration and clear the group
             if peopleInGroup == m:
                 temp = currentGroup.copy()
                 currentIteration.append(temp)
                 currentGroup.clear()
                 peopleInGroup = 0
 
-            # current group to put people into (person in spot 1 should be host)
-            if person in notInGroup:
-                if not currentGroup:
+            # if current group is empty, add current person to current group as host
+            if not currentGroup:
+                # if we have leftovers, don't add a host
+                if len(notInGroup) < m:
+                    fullBreak = True
+                    break
+                # add a host
+                else:
                     currentGroup.append(person)
                     notInGroup.remove(person)
                     peopleInGroup += 1
                     if isCouple:
                         peopleInGroup += 1
-                else:
-                    if not homeConnectionGraph.are_connected(person, currentGroup[0]):
+            
+            # if the current group has people in it, check for connections to host
+            else:
+                # if current person has NOT already been to the current host's house
+                if not homeConnectionGraph.are_connected(person, currentGroup[0]):
+                    
+                    # add graph connection between person and current host storing
+                    #   that the current person has now been to the current host's house
+                    homeConnectionGraph.add_edge(person, currentGroup[0])
 
-                        # check if there is one spot left in the group and we try to
-                        #   add a couple, then skip
-                        if not (peopleInGroup == m-1 and isCouple):
-                            homeConnectionGraph.add_edge(person, currentGroup[0])
-                            currentGroup.append(person)
-                            notInGroup.remove(person)
-                            peopleInGroup += 1
-                            if isCouple:
-                                peopleInGroup += 1
-                        else:
-                            if len(notInGroup) == 1:
-                                temp = currentGroup.copy()
-                                currentIteration.append(temp)
-                                currentGroup.clear()
-                                currentGroup.append(person)
-                                fullBreak = True
-    
-    # if there are left over people who did not fit in the last group
-    if currentGroup:
-        i = 0
-        for person in currentGroup:
-            currentIteration[m-i].append(person)
+                    # add current person to the group
+                    currentGroup.append(person)
+
+                    # remove the current person from the list of ungrouped people
+                    notInGroup.remove(person)
+
+                    # add 1 to our people in group counter
+                    peopleInGroup += 1
+
+                    #if we have a couple, add another to our people in group counter
+                    if isCouple:
+                        peopleInGroup += 1
+    # if we have leftovers, add them to other lists
+    if (notInGroup):
+        i = 1
+        for person in notInGroup:
+            currentIteration[-i].append(person)
             i += 1
 
     return currentIteration
 
+
+
+def makeGroups(listOfPeople, homeConnectionGraph, m):
+    listOfIterations = []
+    # if we have a clique, everyone has been to everybody's house
+    while (graph.omega() != len(listOfPeople)):
+        listOfIterations.append(getIteration(listOfPeople, homeConnectionGraph, m))
+        print(listOfIterations)
+    return listOfIterations
+
 print(getIteration(graphNames, graph, m))
 
-
-# listOfIterations = []
-
-# # if we have a clique, everyone has been to everybody's house
+# 
 # if graph.omega() == list.size:
 #     return finalIteration
