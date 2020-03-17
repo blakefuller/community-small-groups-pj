@@ -40,6 +40,8 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
             # if current person is a couple and we only have one spot left in
             #   the group, then skip over them
             if (peopleInGroup == m-1 and isCouple):
+                if person in notConnectedToCurrentHost:
+                    notConnectedToCurrentHost.remove(person)
                 continue
 
             # if group size is full, add it to the iteration and clear the group
@@ -85,11 +87,15 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                     # add 1 to our people in group counter
                     peopleInGroup += 1
 
+                    # remove current person from list of people not connected to host
+                    notConnectedToCurrentHost.remove(person)
+
                     #if we have a couple, add another to our people in group counter
                     if isCouple:
                         peopleInGroup += 1
                 else:
-                    notConnectedToCurrentHost.remove(person)
+                    if person in notConnectedToCurrentHost:
+                        notConnectedToCurrentHost.remove(person)
                     if not notConnectedToCurrentHost:
                         # add current person to the group
                         currentGroup.append(person)
@@ -116,13 +122,14 @@ def makeGroups(listOfPeople, homeConnectionGraph, m):
     listOfIterations = []
     # if we have a clique, everyone has been to everybody's house
     while (graph.omega() != len(listOfPeople)):
+        listOfPeople.append(listOfPeople[0])
+        listOfPeople.remove(listOfPeople[0])
+
         iteration = getIteration(listOfPeople, homeConnectionGraph, m)
         listOfIterations.append(iteration)
-        print(iteration)
+        # print(iteration)
     return listOfIterations
 
-makeGroups(graphNames, graph, m)
+print(len(makeGroups(graphNames, graph, m)))
 
-# 
-# if graph.omega() == list.size:
-#     return finalIteration
+print(graph)
