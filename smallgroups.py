@@ -24,12 +24,14 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
     currentGroup = []
     peopleInGroup = 0
     fullBreak = False
-    connectedToCurrentHost = []
-
+    notConnectedToCurrentHost = []
+    
     while notInGroup:
+        # notConnectedToCurrentHost = notInGroup.copy()
         if fullBreak:
             break
         for person in notInGroup:
+            
             # check if person is a couple
             isCouple = False
             if "," in person:
@@ -59,6 +61,8 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                 else:
                     currentGroup.append(person)
                     notInGroup.remove(person)
+                    notConnectedToCurrentHost.clear()
+                    notConnectedToCurrentHost = notInGroup.copy()
                     peopleInGroup += 1
                     if isCouple:
                         peopleInGroup += 1
@@ -85,8 +89,8 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                     if isCouple:
                         peopleInGroup += 1
                 else:
-                    connectedToCurrentHost.append(person)
-                    if connectedToCurrentHost == notInGroup:
+                    notConnectedToCurrentHost.remove(person)
+                    if not notConnectedToCurrentHost:
                         # add current person to the group
                         currentGroup.append(person)
 
@@ -99,7 +103,6 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                         #if we have a couple, add another to our people in group counter
                         if isCouple:
                             peopleInGroup += 1
-                        connectedToCurrentHost.clear()
     # if we have leftovers, add them to other lists
     if (notInGroup):
         i = 1
