@@ -2,12 +2,18 @@
 import sys
 from igraph import *
 
-# group size 
-# note: (group size of 3 sometimes breaks because you can't have 2 couples in one group)
-m = 4
+# get filename and group size from command line
+fileName = sys.argv[1]
+m = int(sys.argv[2])
 
-#read from file and store names as a list of lists
-fp = open("group2.txt", "r")
+# group sizes of 3 or less are not allowed. 2 couples will never be connected if group size is 3 or less
+if (m <= 3):
+    print('ERROR: minimium group size is 4. This is because 2 couples will never be connected if group size is 3 or less.')
+    sys.exit()
+
+# read from file and store names as a list of lists
+# change name of file to test groups ('group1.txt,' 'group2.txt', or 'group3.txt')
+fp = open(fileName, "r")
 lines = fp.readlines()
 names = []
 graphNames = []
@@ -215,9 +221,18 @@ def makeGroups(listOfPeople, homeConnectionGraph, m):
 
     return listOfIterations
 
-# call function
+#PRINTING FOR TESTING
+
+# print total number of iterations
 print(f'total iterations: {len(makeGroups(graphNames, homeConnectionsGraph, m))}')
 
-# uncomment to print out the graph and all its nodes. Use for showing whether every connection
+# print size of largest clique in the graph
+print(f'size of largest clique (should be total size of people if program is working): {homeConnectionsGraph.omega()}')
+
+# print whole unformatted list of lists
+# print((makeGroups(graphNames, homeConnectionsGraph, m)))
+
+# print the graph and all its nodes. use for showing whether every connection
 #   has actually been made
 # print(homeConnectionsGraph)
+

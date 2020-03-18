@@ -1,0 +1,40 @@
+$ python3 smallgroups.py group1.txt 4
+
+iteration number 1: [['Jana Haynes', 'Caleb Crawford', 'Johnathan Norman, Chelsea Quinn'], ['Denise Lewis', 'Caroline Walters, Denise Fields', 'Christian Gibson'], ['Elsie Higgins', 'Stella Shelton', 'Jimmie Rice', 'Leland Hampton'], ['Ron Stone', 'Stella Green, Mona Martinez', 'Pedro Weber']]
+
+iteration number 2: [['Elsie Higgins', 'Ron Stone', 'Denise Lewis', 'Christian Gibson'], ['Jana Haynes', 'Stella Shelton', 'Caroline Walters, Denise Fields'], ['Stella Green, Mona Martinez', 'Caleb Crawford', 'Pedro Weber'], ['Leland Hampton', 'Johnathan Norman, Chelsea Quinn', 'Jimmie Rice']]
+
+iteration number 3: [['Caleb Crawford', 'Johnathan Norman, Chelsea Quinn', 'Denise Lewis'], ['Caroline Walters, Denise Fields', 'Stella Green, Mona Martinez'], ['Leland Hampton', 'Ron Stone', 'Pedro Weber', 'Christian Gibson'], ['Elsie Higgins', 'Jana Haynes', 'Stella Shelton', 'Jimmie Rice']]
+
+iteration number 4: [['Ron Stone', 'Stella Shelton', 'Caroline Walters, Denise Fields'], ['Stella Green, Mona Martinez', 'Leland Hampton', 'Elsie Higgins'], ['Johnathan Norman, Chelsea Quinn', 'Pedro Weber', 'Christian Gibson'], ['Caleb Crawford', 'Jimmie Rice', 'Jana Haynes', 'Denise Lewis']]
+
+iteration number 5: [['Johnathan Norman, Chelsea Quinn', 'Denise Lewis', 'Jimmie Rice'], ['Christian Gibson', 'Jana Haynes', 'Caleb Crawford', 'Stella Shelton'], ['Caroline Walters, Denise Fields', 'Leland Hampton', 'Pedro Weber'], ['Elsie Higgins', 'Ron Stone', 'Stella Green, Mona Martinez']]
+
+iteration number 6: [['Stella Shelton', 'Pedro Weber', 'Jimmie Rice', 'Leland Hampton'], ['Elsie Higgins', 'Johnathan Norman, Chelsea Quinn', 'Caleb Crawford'], ['Denise Lewis', 'Stella Green, Mona Martinez', 'Jana Haynes'], ['Caroline Walters, Denise Fields', 'Christian Gibson', 'Ron Stone']]
+
+iteration number 7: [['Denise Lewis', 'Jimmie Rice', 'Leland Hampton', 'Ron Stone'], ['Stella Shelton', 'Caroline Walters, Denise Fields', 'Caleb Crawford'], ['Pedro Weber', 'Christian Gibson', 'Elsie Higgins', 'Jana Haynes'], ['Stella Green, Mona Martinez', 'Johnathan Norman, Chelsea Quinn']]
+
+iteration number 8: [['Pedro Weber', 'Jimmie Rice', 'Caleb Crawford', 'Denise Lewis'], ['Caroline Walters, Denise Fields', 'Elsie Higgins', 'Ron Stone'], ['Stella Shelton', 'Stella Green, Mona Martinez', 'Christian Gibson'], ['Jana Haynes', 'Leland Hampton', 'Johnathan Norman, Chelsea Quinn']]
+
+iteration number 9: [['Caroline Walters, Denise Fields', 'Caleb Crawford', 'Jimmie Rice'], ['Christian Gibson', 'Ron Stone', 'Stella Green, Mona Martinez'], ['Jana Haynes', 'Elsie Higgins', 'Stella Shelton', 'Pedro Weber'], ['Leland Hampton', 'Johnathan Norman, Chelsea Quinn', 'Denise Lewis']]
+
+iteration number 10: [['Jimmie Rice', 'Christian Gibson', 'Jana Haynes', 'Ron Stone'], ['Stella Shelton', 'Johnathan Norman, Chelsea Quinn', 'Denise Lewis'], ['Caroline Walters, Denise Fields', 'Pedro Weber', 'Leland Hampton'], ['Caleb Crawford', 'Elsie Higgins', 'Stella Green, Mona Martinez']]
+
+iteration number 11: [['Stella Green, Mona Martinez', 'Jana Haynes', 'Jimmie Rice'], ['Christian Gibson', 'Leland Hampton', 'Caleb Crawford', 'Stella Shelton'], ['Pedro Weber', 'Caroline Walters, Denise Fields', 'Elsie Higgins'], ['Johnathan Norman, Chelsea Quinn', 'Ron Stone', 'Denise Lewis']]
+
+iteration number 12: [['Christian Gibson', 'Leland Hampton', 'Elsie Higgins', 'Ron Stone'], ['Stella Shelton', 'Denise Lewis', 'Caroline Walters, Denise Fields'], ['Stella Green, Mona Martinez', 'Jimmie Rice', 'Jana Haynes'], ['Johnathan Norman, Chelsea Quinn', 'Pedro Weber', 'Caleb Crawford']]
+
+iteration number 13: [['Leland Hampton', 'Caleb Crawford', 'Ron Stone', 'Stella Shelton'], ['Pedro Weber', 'Caroline Walters, Denise Fields', 'Christian Gibson'], ['Jana Haynes', 'Elsie Higgins', 'Denise Lewis', 'Jimmie Rice'], ['Johnathan Norman, Chelsea Quinn', 'Stella Green, Mona Martinez']]
+
+iteration number 14: [['Jana Haynes', 'Ron Stone', 'Johnathan Norman, Chelsea Quinn'], ['Denise Lewis', 'Pedro Weber', 'Jimmie Rice', 'Christian Gibson'], ['Elsie Higgins', 'Caleb Crawford', 'Caroline Walters, Denise Fields'], ['Leland Hampton', 'Stella Green, Mona Martinez', 'Stella Shelton']]
+
+iteration number 15: [['Elsie Higgins', 'Caleb Crawford', 'Johnathan Norman, Chelsea Quinn'], ['Denise Lewis', 'Pedro Weber', 'Jimmie Rice', 'Christian Gibson'], ['Jana Haynes', 'Leland Hampton', 'Ron Stone', 'Stella Shelton'], ['Stella Green, Mona Martinez', 'Caroline Walters, Denise Fields']]
+
+iteration number 16: [['Caleb Crawford', 'Ron Stone', 'Stella Shelton', 'Pedro Weber'], ['Jimmie Rice', 'Stella Green, Mona Martinez', 'Leland Hampton'], ['Elsie Higgins', 'Jana Haynes', 'Johnathan Norman, Chelsea Quinn'], ['Caroline Walters, Denise Fields', 'Christian Gibson', 'Denise Lewis']]
+
+iteration number 17: [['Ron Stone', 'Johnathan Norman, Chelsea Quinn', 'Denise Lewis'], ['Caroline Walters, Denise Fields', 'Jimmie Rice', 'Christian Gibson'], ['Jana Haynes', 'Elsie Higgins', 'Stella Shelton', 'Leland Hampton'], ['Pedro Weber', 'Stella Green, Mona Martinez', 'Caleb Crawford']]
+
+iteration number 18: [['Johnathan Norman, Chelsea Quinn', 'Caroline Walters, Denise Fields'], ['Stella Green, Mona Martinez', 'Christian Gibson', 'Jana Haynes'], ['Caleb Crawford', 'Ron Stone', 'Stella Shelton', 'Pedro Weber'], ['Leland Hampton', 'Elsie Higgins', 'Denise Lewis', 'Jimmie Rice']]
+
+total iterations: 18
+size of largest clique (should be total size of people if program is working): 13
