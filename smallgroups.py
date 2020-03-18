@@ -4,10 +4,10 @@ from igraph import *
 
 # group size 
 # note: (group size of 3 sometimes breaks because you can't have 2 couples in one group)
-m = 5
+m = 4
 
 #read from file and store names as a list of lists
-fp = open("group1.txt", "r")
+fp = open("group2.txt", "r")
 lines = fp.readlines()
 names = []
 graphNames = []
@@ -16,8 +16,8 @@ for line in lines:
     graphNames.append(line.rstrip("\n"))
 
 # set up graph with each name as a node (couple is one node)
-graph = Graph()
-graph.add_vertices(graphNames)
+homeConnectionsGraph = Graph()
+homeConnectionsGraph.add_vertices(graphNames)
 
 # function for getting a single iteration of groups
 # PARAMETERS: a list of all the people, the graph of connections between them,
@@ -194,7 +194,7 @@ def makeGroups(listOfPeople, homeConnectionGraph, m):
     iterationNumber = 0
 
     # if we have a clique, everyone has been to everybody's house
-    while (graph.omega() != len(listOfPeople)):
+    while (homeConnectionsGraph.omega() != len(listOfPeople)):
 
         #reshuffling the order of the people so that the first person isn't
         #   a host every time
@@ -216,4 +216,8 @@ def makeGroups(listOfPeople, homeConnectionGraph, m):
     return listOfIterations
 
 # call function
-print(f'total iterations: {len(makeGroups(graphNames, graph, m))}')
+print(f'total iterations: {len(makeGroups(graphNames, homeConnectionsGraph, m))}')
+
+# uncomment to print out the graph and all its nodes. Use for showing whether every connection
+#   has actually been made
+# print(homeConnectionsGraph)
