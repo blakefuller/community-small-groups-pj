@@ -2,7 +2,7 @@ import sys
 from igraph import *
 import random 
 
-m = 3
+m = 5
 
 #read from file and store names as a list of lists
 fp = open("group2.txt", "r")
@@ -132,6 +132,7 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
             # i += 1
             if i < len(currentIteration):
                 currentIteration[-i].append(person)
+                homeConnectionGraph.add_edge(person, currentIteration[-i][0])
             else:
                 i = 0
             i += 1
