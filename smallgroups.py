@@ -1,10 +1,11 @@
 import sys
 from igraph import *
+import random 
 
-m = 4
+m = 3
 
 #read from file and store names as a list of lists
-fp = open("group1.txt", "r")
+fp = open("group2.txt", "r")
 lines = fp.readlines()
 names = []
 graphNames = []
@@ -25,7 +26,11 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
     peopleInGroup = 0
     fullBreak = False
     notConnectedToCurrentHost = []
-    
+    numCouples = 0
+    for person in listOfPeople:
+        if ',' in person:
+            numCouples += 1
+
     while notInGroup:
         # notConnectedToCurrentHost = notInGroup.copy()
         if fullBreak:
@@ -40,22 +45,22 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
             # if current person is a couple and we only have one spot left in
             #   the group, then skip over them
             if (peopleInGroup == m-1 and isCouple):
+
+                #edge case for if we have one spot left and one or more couples left in notInGroup
+                if numCouples == len(notInGroup):
+                    fullBreak = True
+                    break
+
+                #if we're skipping over a couple, remove them from notConnectedToCurrentHost
                 if person in notConnectedToCurrentHost:
                     notConnectedToCurrentHost.remove(person)
                 continue
-
-            # if group size is full, add it to the iteration and clear the group
-            if peopleInGroup == m:
-                temp = currentGroup.copy()
-                currentIteration.append(temp)
-                currentGroup.clear()
-                peopleInGroup = 0
 
             # if current group is empty, add current person to current group as host
             if not currentGroup:
 
                 # if we have leftovers, don't add a host
-                if len(notInGroup) < m:
+                if (len(notInGroup) + numCouples) < m:
                     fullBreak = True
                     break
 
@@ -68,6 +73,7 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                     peopleInGroup += 1
                     if isCouple:
                         peopleInGroup += 1
+                        numCouples -= 1
             
             # if the current group has people in it, check for connections to host
             else:
@@ -93,6 +99,7 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                     #if we have a couple, add another to our people in group counter
                     if isCouple:
                         peopleInGroup += 1
+                        numCouples -= 1
                 else:
                     if person in notConnectedToCurrentHost:
                         notConnectedToCurrentHost.remove(person)
@@ -109,11 +116,24 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                         #if we have a couple, add another to our people in group counter
                         if isCouple:
                             peopleInGroup += 1
+                            numCouples -= 1
+
+            # if group size is full, add it to the iteration and clear the group
+            if peopleInGroup == m:
+                temp = currentGroup.copy()
+                currentIteration.append(temp)
+                currentGroup.clear()
+                peopleInGroup = 0
     # if we have leftovers, add them to other lists
     if (notInGroup):
         i = 1
         for person in notInGroup:
-            currentIteration[-i].append(person)
+            # currentIteration[-i].append(person)
+            # i += 1
+            if i < len(currentIteration):
+                currentIteration[-i].append(person)
+            else:
+                i = 0
             i += 1
 
     return currentIteration
@@ -122,14 +142,17 @@ def makeGroups(listOfPeople, homeConnectionGraph, m):
     listOfIterations = []
     # if we have a clique, everyone has been to everybody's house
     while (graph.omega() != len(listOfPeople)):
-        listOfPeople.append(listOfPeople[0])
-        listOfPeople.remove(listOfPeople[0])
+        # listOfPeople.append(listOfPeople[0])
+        # listOfPeople.remove(listOfPeople[0])
+
+        # probably running infinite loops because just 2 people never get connected
+        random.shuffle(listOfPeople)
 
         iteration = getIteration(listOfPeople, homeConnectionGraph, m)
         listOfIterations.append(iteration)
-        # print(iteration)
+        print(iteration)
     return listOfIterations
 
 print(len(makeGroups(graphNames, graph, m)))
 
-print(graph)
+# print(graph)

@@ -1,0 +1,24 @@
+What the program should do: Output a list of lists where people are distributed in groups such that
+every group has a host, couples are always together, and everyone gets to go to everyone elses house
+
+Deliverables:
+1. Three text files, with 16, 29, and 34 names respectively
+2. Readme:
+    a. Instructions on how to run the program
+    b. Section describing:
+        1. How to find the list of lists in the minimum amount of iterations
+        2. Time complexity of such an algorithm
+        3. Time complexity of our algorithm
+        4. Difficulties faced and how we prevailed
+        5. Screenshots of program running
+        6. Output list of lists for each test file
+        7. Link to youtube video of program running
+3. Source code of program
+
+Grading:
+1. Readme: 50 points
+2. Video: 15 points
+3. Instructions adequate and program runs 
+4. Requirements: 5 points
+5. Quality of program: 20 points
+6. Programming practices: subtracted from total if things are bad, up to 50 points
