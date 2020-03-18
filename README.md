@@ -13,11 +13,12 @@ To go about solving this problem, we created a Python program that reads a simpl
 ## Requirements
 The dependencies to run this program are **Python 3.x** and **python-igraph version 0.8.0**
 
-If you don't have Python 3 installed, refer to the [Python download](https://www.python.org/downloads/) page.
+If you don't have Python 3 installed, refer to the Python [download](https://www.python.org/downloads/) page.
+
 To install python-igraph, run **pip install python-igraph** in a terminal window.
 
 ## User Manual
-To clone this repository, click on the green **Clone or download** button in the top right, copy the HTTPS link, then type **git clone {link}** (where {link} is what you copied) in a terminal window in the directory of wherever you want to to save the files. Type **cd community-small-groups-pj**. Then to run the program, type **python3 smallgroups.py group1.txt {m}** (where {m} is the size of each small group). If *python3* isn't recognized as a command, try running just *python* instead.
+To clone this repository, click on the green **Clone or download** button in the top right, copy the HTTPS link, then type **git clone *link*** (where *link* is what you copied) in a terminal window in the directory of wherever you want to to save the files. Type **cd community-small-groups-pj**. Then to run the program, type **python3 smallgroups.py group1.txt *m*** (where *m* is the size of each small group). If *python3* isn't recognized as a command, try running just *python* instead.
 
 ## Reflection
 *Write the reflection about getting the small groups in the minimum number of iterations, etc.*
