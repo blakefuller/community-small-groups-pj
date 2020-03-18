@@ -1,11 +1,13 @@
+# imports
 import sys
 from igraph import *
-import random 
 
+# group size 
+# note: (group size of 3 sometimes breaks because you can't have 2 couples in one group)
 m = 5
 
 #read from file and store names as a list of lists
-fp = open("group2.txt", "r")
+fp = open("group1.txt", "r")
 lines = fp.readlines()
 names = []
 graphNames = []
@@ -13,69 +15,103 @@ for line in lines:
     names.append(line.rstrip("\n").split(","))
     graphNames.append(line.rstrip("\n"))
 
-
+# set up graph with each name as a node (couple is one node)
 graph = Graph()
 graph.add_vertices(graphNames)
 
+# function for getting a single iteration of groups
+# PARAMETERS: a list of all the people, the graph of connections between them,
+#   and the group size
 def getIteration(listOfPeople, homeConnectionGraph, m):
 
-    # create list of iterations and list for storing groups of the current iteration
-    notInGroup = listOfPeople.copy()
+    # full iteration for this instance of a list of people, add to as we go through
     currentIteration = []
+
+    # list of all people who don't have a group
+    ungroupedPeople = listOfPeople.copy()
+    
+    # keeping track of the current group that we're on (gets reset after each new group
+    #   is added)
     currentGroup = []
-    peopleInGroup = 0
+    peopleInCurrentGroup = 0
+
+    # variable for if we need to break out of our while loop and add leftovers
+    #   becomes true if either there is one spot left and only a couple is left, or 
+    #   the total number of ungrouped people isn't enough to form a group
     fullBreak = False
+
+    # list of people who aren't connected to current. if this is empty, we have to add
+    # someone to the current group who is already connected to host (not ideal)
     notConnectedToCurrentHost = []
-    numCouples = 0
+
+    #number of couples in current list of people
+    numUngroupedCouples = 0
+
+    #get number of couples
     for person in listOfPeople:
         if ',' in person:
-            numCouples += 1
+            numUngroupedCouples += 1
 
-    while notInGroup:
-        # notConnectedToCurrentHost = notInGroup.copy()
+    while ungroupedPeople:
+        # checking if we've reached one of the above mentioned situations and need to break
+        #   out of loop to add leftovers
         if fullBreak:
             break
-        for person in notInGroup:
+
+        #go through all ungrouped people
+        for person in ungroupedPeople:
             
-            # check if person is a couple
+            # check if person is a couple (affects rest of code if they are)
             isCouple = False
             if "," in person:
                 isCouple = True
 
-            # if current person is a couple and we only have one spot left in
+            # EDGE CASE: if current person is a couple and we only have one spot left in
             #   the group, then skip over them
-            if (peopleInGroup == m-1 and isCouple):
+            if (peopleInCurrentGroup == m-1 and isCouple):
 
-                #edge case for if we have one spot left and one or more couples left in notInGroup
-                if numCouples == len(notInGroup):
+                #EDGE CASE: for if we have one spot left and one or more couples left in ungroupedPeople
+                if numUngroupedCouples == len(ungroupedPeople):
                     fullBreak = True
                     break
 
-                #if we're skipping over a couple, remove them from notConnectedToCurrentHost
+                # if we're skipping over a couple, remove them from notConnectedToCurrentHost
                 if person in notConnectedToCurrentHost:
                     notConnectedToCurrentHost.remove(person)
                 continue
 
             # if current group is empty, add current person to current group as host
+            #   note: host is always spot 0 in current group list
             if not currentGroup:
 
-                # if we have leftovers, don't add a host
-                if (len(notInGroup) + numCouples) < m:
+                # if the number of people left isn't enough to form a full group, exit the 
+                #   while loop so we can add leftovers to other groups
+                if (len(ungroupedPeople) + numUngroupedCouples) < m:
                     fullBreak = True
                     break
 
                 # else, add a host
                 else:
+
+                    # add host to group and remove them from ungrouped people
                     currentGroup.append(person)
-                    notInGroup.remove(person)
+                    ungroupedPeople.remove(person)
+
+                    # reset people who are connected to current host
                     notConnectedToCurrentHost.clear()
-                    notConnectedToCurrentHost = notInGroup.copy()
-                    peopleInGroup += 1
+                    notConnectedToCurrentHost = ungroupedPeople.copy()
+
+                    # add one to people in the current group
+                    peopleInCurrentGroup += 1
+
+                    # add another if it's a couple and remove one from the number of ungrouped couples
                     if isCouple:
-                        peopleInGroup += 1
-                        numCouples -= 1
+                        peopleInCurrentGroup += 1
+                        numUngroupedCouples -= 1
             
-            # if the current group has people in it, check for connections to host
+            # if we already have a host, check for connections to host
+            # ideally, we want to add a person who doesn't have a connection to
+            # the host, but we might have to
             else:
                 # if current person has NOT already been to the current host's house
                 if not homeConnectionGraph.are_connected(person, currentGroup[0]):
@@ -84,52 +120,59 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
                     #   that the current person has now been to the current host's house
                     homeConnectionGraph.add_edge(person, currentGroup[0])
 
-                    # add current person to the group
+                    # add current person to the current group
                     currentGroup.append(person)
 
                     # remove the current person from the list of ungrouped people
-                    notInGroup.remove(person)
-
-                    # add 1 to our people in group counter
-                    peopleInGroup += 1
+                    ungroupedPeople.remove(person)
 
                     # remove current person from list of people not connected to host
                     notConnectedToCurrentHost.remove(person)
 
-                    #if we have a couple, add another to our people in group counter
+                    # add 1 to our people in group counter
+                    peopleInCurrentGroup += 1
+
+                    # add another if it's a couple and remove one from the number of ungrouped couples
                     if isCouple:
-                        peopleInGroup += 1
-                        numCouples -= 1
+                        peopleInCurrentGroup += 1
+                        numUngroupedCouples -= 1
+                
+                #don't add them if they already have a connection
                 else:
+                    # EDGE CASE: if we eventually have tried adding all remaining people 
+                    #   but all have connections to host, add a person who already 
+                    #   has a connection to the host and keep going 
                     if person in notConnectedToCurrentHost:
                         notConnectedToCurrentHost.remove(person)
+
+                    # this is where we add a person even if they have a connection, i.e.
+                    #   the list of people who are not connected to the host is empty
                     if not notConnectedToCurrentHost:
                         # add current person to the group
                         currentGroup.append(person)
 
                         # remove the current person from the list of ungrouped people
-                        notInGroup.remove(person)
+                        ungroupedPeople.remove(person)
 
                         # add 1 to our people in group counter
-                        peopleInGroup += 1
+                        peopleInCurrentGroup += 1
 
-                        #if we have a couple, add another to our people in group counter
+                        # add another if it's a couple and remove one from the number of ungrouped couples
                         if isCouple:
-                            peopleInGroup += 1
-                            numCouples -= 1
+                            peopleInCurrentGroup += 1
+                            numUngroupedCouples -= 1
 
-            # if group size is full, add it to the iteration and clear the group
-            if peopleInGroup == m:
+            # if group size is full, add it to the iteration and clear the group/group size counter
+            if peopleInCurrentGroup == m:
                 temp = currentGroup.copy()
                 currentIteration.append(temp)
                 currentGroup.clear()
-                peopleInGroup = 0
+                peopleInCurrentGroup = 0
+
     # if we have leftovers, add them to other lists
-    if (notInGroup):
+    if (ungroupedPeople):
         i = 1
-        for person in notInGroup:
-            # currentIteration[-i].append(person)
-            # i += 1
+        for person in ungroupedPeople:
             if i < len(currentIteration):
                 currentIteration[-i].append(person)
                 homeConnectionGraph.add_edge(person, currentIteration[-i][0])
@@ -139,21 +182,38 @@ def getIteration(listOfPeople, homeConnectionGraph, m):
 
     return currentIteration
 
+# function for making a list of all the iterations
+# PARAMETERS: a list of all the people, the graph of connections between them,
+#   and the group size
 def makeGroups(listOfPeople, homeConnectionGraph, m):
+
+    # list to store all the iterations of groups
     listOfIterations = []
+
+    # counter to keep track of how many iterations
+    iterationNumber = 0
+
     # if we have a clique, everyone has been to everybody's house
     while (graph.omega() != len(listOfPeople)):
-        # listOfPeople.append(listOfPeople[0])
-        # listOfPeople.remove(listOfPeople[0])
 
-        # probably running infinite loops because just 2 people never get connected
-        random.shuffle(listOfPeople)
+        #reshuffling the order of the people so that the first person isn't
+        #   a host every time
+        listOfPeople.append(listOfPeople[0])
+        listOfPeople.remove(listOfPeople[0])
 
+        # get one iteration
         iteration = getIteration(listOfPeople, homeConnectionGraph, m)
+
+        # add that iteration to the list of all iterations
         listOfIterations.append(iteration)
-        print(iteration)
+
+        # add one to iteration number 
+        iterationNumber += 1
+
+        #print each iteration
+        print(f'iteration number {iterationNumber}: {iteration}\n')
+
     return listOfIterations
 
-print(len(makeGroups(graphNames, graph, m)))
-
-# print(graph)
+# call function
+print(f'total iterations: {len(makeGroups(graphNames, graph, m))}')
