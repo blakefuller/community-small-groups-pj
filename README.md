@@ -1,31 +1,23 @@
 # Creating Community Small Groups
-
-_**You should erase this the text below as you fill it up with your own text**_
-
-Here you will describe your term project. Remember to write your names.
-[More detailed instructions here](SmallGroups-Graph.pdf)
-
-You will need to include in this repository:
-- `group1.txt` a file with 16 names
-- `group2.txt` a file with 29 names
-- `group3.txt` a file with 34 names
-- The source code of your program
-
-This document should be organized as follows:
-
-# Creating Community Small Groups
-A work by: McDonald Berger and Igor Tzankoven
+A work by: Trent Cowden and Blake Fuller
 
 *Write an introduction to your work*
 
 ## Description
-*Describe what your project is about and what language you used*
+The problem is as follows: a large group of people get together and want to divide themselves into small groups for an activity, whether that be work groups, a Bible study, etc. In each small group a host is chosen, and all the other small group members meet at the host's house. Each week, the groups are reshuffled and new small group members meet at a new host's house. The question is, what is the minimum number of iterations (or times the small groups meet) such that every member of the large group of people will have been to every other member's house" Likewise, such the minimum number of iterations such that every member of the large group will have hosted every other member at least once?
+
+As an additional issue, married couples are allowed to join the small groups. The couples will count as two people in terms of the size of the groups, but they will always need to be in the same small group.
+
+To go about solving this problem, we created a Python program that reads a simple txt file with a list of the names (couples on one line separated by a comma), and runs an greedy algorithm that determines the minimum number of iterations and prints out the names of everyone in each small group in each iteration.
 
 ## Requirements
-*The requirements of the program, i.e. Python 3.1, what libraries are needed*
+The dependencies to run this program are **Python 3.x** and **python-igraph version 0.8.0**
+
+If you don't have Python 3 installed, refer to the [Python download](https://www.python.org/downloads/) page.
+To install python-igraph, run **pip install python-igraph** in a terminal window.
 
 ## User Manual
-*Once a person clones this into their computer how the person is supposed to run the program, add screenshots showing how your program works, also add here the link to the Youtube video showing the program running*
+To clone this repository, click on the green **Clone or download** button in the top right, copy the HTTPS link, then type **git clone {link}** (where {link} is what you copied) in a terminal window in the directory of wherever you want to to save the files. Type **cd community-small-groups-pj**. Then to run the program, type **python3 smallgroups.py group1.txt {m}** (where {m} is the size of each small group). If *python3* isn't recognized as a command, try running just *python* instead.
 
 ## Reflection
 *Write the reflection about getting the small groups in the minimum number of iterations, etc.*
