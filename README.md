@@ -1,8 +1,6 @@
 # Creating Community Small Groups
 A work by: Trent Cowden and Blake Fuller
 
-*Write an introduction to your work*
-
 ## Description
 The problem is as follows: a large group of people get together and want to divide themselves into small groups for an activity, whether that be work groups, a Bible study, etc. In each small group a host is chosen, and all the other small group members meet at the host's house. Each week, the groups are reshuffled and new small group members meet at a new host's house. The question is, what is the minimum number of iterations (or times the small groups meet) such that every member of the large group of people will have been to every other member's house" Likewise, such the minimum number of iterations such that every member of the large group will have hosted every other member at least once?
 
