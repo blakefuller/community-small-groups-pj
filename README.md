@@ -22,7 +22,3 @@ To clone this repository, click on the green **Clone or download** button in the
 
 Then to run the program, type **python3 smallgroups.py group1.txt *m*** (where *m* is the desired size of each small group). If *python3* isn't recognized as a command, try running just *python* instead.
 
-## Reflection
-*Write the reflection about getting the small groups in the minimum number of iterations, etc.*
-
-
